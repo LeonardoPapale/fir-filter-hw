@@ -7,6 +7,7 @@ import scipy.signal as signal
 import argparse
 import config
 import os
+from save_response import save_results
 
 # folder to save the results 
 folder_name = "/home/papaple/2025_04_12_FIR_filter/results"
@@ -22,16 +23,8 @@ elif args.filter_type == "HPF":
     taps_coeffs = signal.firwin(args.number_of_taps, args.cut_off_freq_1, pass_zero = False)
 else: print(f"please, select one of type of filter among LPF, BPF, HPF")
 
-w, h = signal.freqz(taps_coeffs)
 
-plt.title("The frequency response of the FIR filter, the frequency is normalized to 1")
-plt.plot(w,20*np.log10(np.abs(h)),'b')
-plt.ylabel("Amplitude Response (dB)")
-plt.xlabel("Normalized frequency")
-plt.grid()
-save_path = os.path.join(folder_name, f'FIR_filter_response.png')
-plt.savefig(save_path)
-plt.close()
+save_results(taps_coeffs, folder_name)
 
 
 
